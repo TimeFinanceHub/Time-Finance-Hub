@@ -4,7 +4,6 @@ let seconds = parseInt(localStorage.getItem('seconds')) || 0;
 let timerInterval;
 const addHourButton = document.getElementById('addHour');
 
-// New variables for timestamp-based sync
 let timerStartTime = parseInt(localStorage.getItem('timerStartTime')) || 0;
 let systemStartTime = parseInt(localStorage.getItem('systemStartTime')) || 0;
 
@@ -17,17 +16,16 @@ function updateTimerDisplay() {
 
     if (hours >= 3) {
         addHourButton.disabled = true;
-        checkAndResetTimer(); // Call reset when disabled
+        checkAndResetTimer();
     } else {
         addHourButton.disabled = false;
     }
 
-    // Save timer state to local storage
     localStorage.setItem('hours', hours);
     localStorage.setItem('minutes', minutes);
     localStorage.setItem('seconds', seconds);
     localStorage.setItem('timerStartTime', timerStartTime);
-    localStorage.setItem('systemStartTime', systemStartTime); // Save system start time
+    localStorage.setItem('systemStartTime', systemStartTime);
 }
 
 function checkAndResetTimer() {
@@ -35,34 +33,35 @@ function checkAndResetTimer() {
         if (minutes !== 0 || seconds !== 0) {
             minutes = 0;
             seconds = 0;
-            updateTimerDisplay(); // Update display after reset
+            updateTimerDisplay();
         }
     }
 }
 
 function startTimer() {
-    if (!timerStartTime) { // If timer has not started, record start times.
+    if (!timerStartTime) {
         timerStartTime = Date.now();
         systemStartTime = Date.now();
         localStorage.setItem('timerStartTime', timerStartTime);
         localStorage.setItem('systemStartTime', systemStartTime);
     }
+
     timerInterval = setInterval(() => {
         const currentTime = Date.now();
         const elapsedTime = currentTime - timerStartTime;
-        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-        const remainingSeconds = totalSeconds - Math.floor(elapsedTime / 1000);
+        const totalMilliseconds = (hours * 3600 + minutes * 60 + seconds) * 1000;
+        const remainingMilliseconds = totalMilliseconds - elapsedTime;
 
-        if (remainingSeconds <= 0) {
+        if (remainingMilliseconds <= 0) {
             hours = 3;
             minutes = 0;
             seconds = 0;
-            timerStartTime = Date.now(); // reset the start time
+            timerStartTime = Date.now();
             systemStartTime = Date.now();
         } else {
-            hours = Math.floor(remainingSeconds / 3600);
-            minutes = Math.floor((remainingSeconds % 3600) / 60);
-            seconds = remainingSeconds % 60;
+            hours = Math.floor(remainingMilliseconds / 3600000);
+            minutes = Math.floor((remainingMilliseconds % 3600000) / 60000);
+            seconds = Math.floor((remainingMilliseconds % 60000) / 1000);
         }
 
         updateTimerDisplay();
@@ -103,7 +102,6 @@ function subtractSeconds(amount) {
     updateTimerDisplay();
 }
 
-// Event listeners for buttons
 document.getElementById('addHour').addEventListener('click', () => addHours(1));
 document.getElementById('subHour').addEventListener('click', () => subtractHours(1));
 document.getElementById('addMinute').addEventListener('click', () => addMinutes(1));
@@ -111,20 +109,19 @@ document.getElementById('subMinute').addEventListener('click', () => subtractMin
 document.getElementById('addSecond').addEventListener('click', () => addSeconds(1));
 document.getElementById('subSecond').addEventListener('click', () => subtractSeconds(1));
 
-// Initial setup and resume logic
 function resumeTimer() {
     if (timerStartTime && systemStartTime) {
         const currentSystemTime = Date.now();
         const systemTimeDifference = currentSystemTime - systemStartTime;
         const adjustedTimerStartTime = timerStartTime + systemTimeDifference;
         const elapsedTime = currentSystemTime - adjustedTimerStartTime;
-        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-        const remainingSeconds = totalSeconds - Math.floor(elapsedTime / 1000);
+        const totalMilliseconds = (hours * 3600 + minutes * 60 + seconds) * 1000;
+        const remainingMilliseconds = totalMilliseconds - elapsedTime;
 
-        if (remainingSeconds > 0) {
-            hours = Math.floor(remainingSeconds / 3600);
-            minutes = Math.floor((remainingSeconds % 3600) / 60);
-            seconds = remainingSeconds % 60;
+        if (remainingMilliseconds > 0) {
+            hours = Math.floor(remainingMilliseconds / 3600000);
+            minutes = Math.floor((remainingMilliseconds % 3600000) / 60000);
+            seconds = Math.floor((remainingMilliseconds % 60000) / 1000);
         } else {
             hours = 3;
             minutes = 0;
@@ -137,4 +134,4 @@ function resumeTimer() {
     startTimer();
 }
 
-resumeTimer(); // Call resumeTimer on page load
+resumeTimer();
