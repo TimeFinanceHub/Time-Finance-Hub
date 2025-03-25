@@ -4,11 +4,13 @@ const amountInput = document.getElementById('amountInput');
 const addRecordButton = document.getElementById('addRecordButton');
 const recordList = document.getElementById('recordList');
 
-let counter = 0;
+let counter = parseInt(localStorage.getItem('counter')) || 0; // Retrieve counter from localStorage
 let records = JSON.parse(localStorage.getItem('records')) || [];
 
 function updateCounterDisplay() {
     counterElement.textContent = counter;
+    localStorage.setItem('counter', counter); // Save counter to localStorage
+
     if (counter >= 1000) {
         amountInput.style.display = 'block';
         addRecordButton.style.display = 'block';
