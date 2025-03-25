@@ -4,6 +4,10 @@ let seconds = parseInt(localStorage.getItem('seconds')) || 0;
 let timerInterval;
 const addHourButton = document.getElementById('addHour');
 
+// New variables for timestamp-based sync
+let timerStartTime = parseInt(localStorage.getItem('timerStartTime')) || 0;
+let systemStartTime = parseInt(localStorage.getItem('systemStartTime')) || 0;
+
 function updateTimerDisplay() {
     const timerElement = document.getElementById('timer');
     const formattedHours = String(hours).padStart(2, '0');
@@ -22,6 +26,8 @@ function updateTimerDisplay() {
     localStorage.setItem('hours', hours);
     localStorage.setItem('minutes', minutes);
     localStorage.setItem('seconds', seconds);
+    localStorage.setItem('timerStartTime', timerStartTime);
+    localStorage.setItem('systemStartTime', systemStartTime); // Save system start time
 }
 
 function checkAndResetTimer() {
@@ -35,27 +41,30 @@ function checkAndResetTimer() {
 }
 
 function startTimer() {
+    if (!timerStartTime) { // If timer has not started, record start times.
+        timerStartTime = Date.now();
+        systemStartTime = Date.now();
+        localStorage.setItem('timerStartTime', timerStartTime);
+        localStorage.setItem('systemStartTime', systemStartTime);
+    }
     timerInterval = setInterval(() => {
-        if (hours === 0 && minutes === 0 && seconds === 0) {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - timerStartTime;
+        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        const remainingSeconds = totalSeconds - Math.floor(elapsedTime / 1000);
+
+        if (remainingSeconds <= 0) {
             hours = 3;
             minutes = 0;
             seconds = 0;
+            timerStartTime = Date.now(); // reset the start time
+            systemStartTime = Date.now();
         } else {
-            if (seconds > 0) {
-                seconds--;
-            } else {
-                if (minutes > 0) {
-                    minutes--;
-                    seconds = 59;
-                } else {
-                    if (hours > 0) {
-                        hours--;
-                        minutes = 59;
-                        seconds = 59;
-                    }
-                }
-            }
+            hours = Math.floor(remainingSeconds / 3600);
+            minutes = Math.floor((remainingSeconds % 3600) / 60);
+            seconds = remainingSeconds % 60;
         }
+
         updateTimerDisplay();
     }, 1000);
 }
@@ -102,6 +111,30 @@ document.getElementById('subMinute').addEventListener('click', () => subtractMin
 document.getElementById('addSecond').addEventListener('click', () => addSeconds(1));
 document.getElementById('subSecond').addEventListener('click', () => subtractSeconds(1));
 
-// Initial setup
-updateTimerDisplay();
-startTimer();
+// Initial setup and resume logic
+function resumeTimer() {
+    if (timerStartTime && systemStartTime) {
+        const currentSystemTime = Date.now();
+        const systemTimeDifference = currentSystemTime - systemStartTime;
+        const adjustedTimerStartTime = timerStartTime + systemTimeDifference;
+        const elapsedTime = currentSystemTime - adjustedTimerStartTime;
+        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        const remainingSeconds = totalSeconds - Math.floor(elapsedTime / 1000);
+
+        if (remainingSeconds > 0) {
+            hours = Math.floor(remainingSeconds / 3600);
+            minutes = Math.floor((remainingSeconds % 3600) / 60);
+            seconds = remainingSeconds % 60;
+        } else {
+            hours = 3;
+            minutes = 0;
+            seconds = 0;
+            timerStartTime = Date.now();
+            systemStartTime = Date.now();
+        }
+    }
+    updateTimerDisplay();
+    startTimer();
+}
+
+resumeTimer(); // Call resumeTimer on page load
