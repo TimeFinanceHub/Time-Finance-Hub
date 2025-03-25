@@ -1,0 +1,173 @@
+/* Update the color variables for the desertic theme */
+:root {
+    --blanco: #f5f5f5; /* Light beige */
+    --oscuro: #333333; /* Dark charcoal */
+    --primario: #d2691e; /* Terracotta */
+    --secundario: #8fbc8f; /* Sage green */
+    --gris: #a9a9a9; /* Grayish brown */
+    --grisClaro: #e0e0e0; /* light grey */
+    --skyBlue: #87ceeb; /* Sky Blue */
+}
+
+/* Add styles for the record and revenue lists */
+#recordList,
+#revenueList {
+    list-style: none;
+    padding: 0;
+}
+
+#recordList li,
+#revenueList li {
+    background-color: var(--grisClaro);
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#recordList li button,
+#revenueList li button {
+    background-color: var(--primario);
+    color: var(--blanco);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#recordList li button:hover,
+#revenueList li button:hover {
+    background-color: #b85f18; /* Darker terracotta on hover */
+}
+
+/* Style for the Cash App link in the footer */
+footer a {
+    background-color: var(--secundario); /* Sage green background */
+    color: var(--blanco);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block; /* Make it behave like a block-level element */
+    margin-bottom: 1rem; /* Add some space below the button */
+}
+
+footer a:hover {
+    background-color: #76a876; /* Darker sage green on hover */
+}
+
+/* other styles from previous code */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--oscuro);
+}
+
+header, nav, aside, main, footer {
+    padding: 1rem;
+}
+
+header {
+    background-color: var(--grisClaro);
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--secundario);
+}
+
+aside {
+    background-color: var(--grisClaro);
+}
+
+main {
+    background-color: var(--blanco);
+}
+
+#calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar th, #calendar td {
+    border: 1px solid var(--gris);
+    padding: 0.5rem;
+    text-align: center;
+}
+
+#calendar th {
+    background-color: var(--grisClaro);
+}
+
+.green { background-color: green; }
+.red { background-color: red; }
+
+footer {
+    background-color: var(--grisClaro);
+    text-align: center;
+    word-break: break-all; /* Fixed footer overflow */
+}
+
+footer div {
+    padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    body {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header header"
+            "aside main"
+            "footer footer";
+    }
+
+    header {
+        grid-area: header;
+    }
+
+    nav {
+      grid-area: header;
+      text-align: left;
+    }
+
+    aside {
+        grid-area: aside;
+    }
+
+    main {
+        grid-area: main;
+    }
+
+    footer {
+        grid-area: footer;
+    }
+}
+
+.controls button {
+    margin: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    background-color: var(--primario);
+    border: none;
+}
+
+#revenueInput, #amountInput {
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+}
