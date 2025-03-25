@@ -73,6 +73,20 @@ header, nav, aside, main, footer {
 header {
     background-color: var(--grisClaro);
     text-align: center;
+    display: flex; /* Added for logo integration */
+    flex-direction: column; /* Stack logo and nav on mobile */
+    align-items: center; /* Center content */
+}
+
+.logo { /* Added for logo */
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.logo img { /* Added for logo */
+    height: 50px;
+    margin-right: 10px;
 }
 
 nav ul {
@@ -140,6 +154,8 @@ footer div {
 
     header {
         grid-area: header;
+        flex-direction: row; /* Horizontal on desktop */
+        justify-content: space-between; /* Space logo and nav */
     }
 
     nav {
@@ -157,6 +173,14 @@ footer div {
 
     footer {
         grid-area: footer;
+    }
+
+    .logo { /* Added for logo when screen is desktop */
+        margin-bottom: 0;
+    }
+
+    nav ul { /* added for nav when screen is desktop */
+        text-align: right;
     }
 }
 
