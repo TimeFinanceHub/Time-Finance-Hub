@@ -49,39 +49,39 @@ function createCalendar(year) {
         monthDiv.appendChild(table);
         calendarDiv.appendChild(monthDiv);
     }
-    // Apply initial red color after cells are created.
+    // Apply initial purpura color after cells are created.
     const allCells = document.querySelectorAll('td[data-date]');
     allCells.forEach(cell => {
         if (!localStorage.getItem(cell.dataset.date)) { // Check if not already in local storage
-            cell.classList.add('red');
-            localStorage.setItem(cell.dataset.date, 'red');
+            cell.classList.add('purpura'); // Corrected class name
+            localStorage.setItem(cell.dataset.date, 'purpura'); // Corrected class name
         }
     });
 
-    loadCellColors(); // Load stored colors.
+    loadCellColors(); // Load purpura colors.
 }
 
 function toggleCellColor(event) {
     const cell = event.target;
     const date = cell.dataset.date;
-    if (cell.classList.contains('green')) {
-        cell.classList.remove('green');
-        cell.classList.add('red');
-        localStorage.setItem(date, 'red');
-    } else if (cell.classList.contains('red')) {
-        cell.classList.remove('red');
-        cell.classList.add('green');
-        localStorage.setItem(date, 'green');
+    if (cell.classList.contains('arena')) { // Corrected class name
+        cell.classList.remove('arena'); // Corrected class name
+        cell.classList.add('purpura'); // Corrected class name
+        localStorage.setItem(date, 'purpura'); // Corrected class name
+    } else if (cell.classList.contains('purpura')) { // Corrected class name
+        cell.classList.remove('purpura'); // Corrected class name
+        cell.classList.add('arena'); // Corrected class name
+        localStorage.setItem(date, 'arena'); // Corrected class name
     }
 }
 
 function loadCellColors() {
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key.startsWith(currentYear)) {
+        if (key.startsWith(currentYear.toString())) { // Convert currentYear to string
             const color = localStorage.getItem(key);
             const cell = document.querySelector(`[data-date="${key}"]`);
-            if (cell) {
+            if (cell && (color === 'arena' || color === 'purpura')) { // check if valid color
                 cell.classList.add(color);
             }
         }

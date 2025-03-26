@@ -1,65 +1,44 @@
-html {
-    font-size: 62.5%;
-    box-sizing: border-box; /* Hack para Box Model **/
-    scroll-snap-type: y mandatory;
+:root {
+    --arena: #98542d;
+    --purpura: #a37ce9;
 }
-body {
+
+* {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    font-size: 16px; /* 1rem = 10px */
-}
-#recordList,
-#revenueList {
-    list-style: none;
-    padding: 0;
+    box-sizing: border-box;
 }
 
-#recordList li,
-#revenueList li {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 5px;
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 16px;
+}
+
+/* Mobile-First Layout */
+body {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Stack elements vertically on mobile */
 }
 
-#recordList li button,
-#revenueList li button {
-    border: none;
-    padding: 0.3rem 0.6rem;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-/* Style for the Cash App link in the footer */
-footer a {
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block; /* Make it behave like a block-level element */
-    margin-bottom: 1rem; /* Add some space below the button */
-}
-
-header, nav, aside, main, footer {
+header, aside, main, footer {
     padding: 1rem;
 }
 
 header {
     text-align: center;
-    display: flex; /* Added for logo integration */
-    flex-direction: column; /* Stack logo and nav on mobile */
-    align-items: center; /* Center content */
 }
 
-.logo { /* Added for logo */
+.logo {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-.logo img { /* Added for logo */
+.logo img {
     height: 50px;
     margin-right: 10px;
 }
@@ -84,24 +63,82 @@ nav a {
     border-collapse: collapse;
 }
 
-#calendar th, #calendar td {
+#calendar th,
+#calendar td {
     padding: 0.5rem;
     text-align: center;
 }
 
-.green { background-color: #98542d; }
-.red { background-color: #a37ce9; }
-
-footer {
-    background-color: var(--grisClaro);
-    text-align: center;
-    word-break: break-all; /* Fixed footer overflow */
+#calendar td {
+    transition: background-color 0.3s ease;
 }
 
-footer div {
+.arena {
+    background-color: var(--arena);
+}
+
+.purpura {
+    background-color: var(--purpura);
+}
+
+#recordList,
+#revenueList {
+    list-style: none;
+    padding: 0;
+}
+
+#recordList li,
+#revenueList li {
+    margin-bottom: 0.5rem;
     padding: 0.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+#recordList li button,
+#revenueList li button,
+.btn {
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+footer a, .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.descripcion {
+    width: 90%; /* full width on mobile */
+    text-align: left;
+    margin: 5px auto;
+}
+
+#revenueInput,
+#amountInput {
+    width: 90%;
+    padding: 0.3rem;
+    margin: 5px auto 10px;
+    display: block;
+}
+
+#incrementSelection {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#incrementSelection label {
+    margin: 5px;
+}
+
+/* Desktop Layout */
 @media (min-width: 768px) {
     body {
         display: grid;
@@ -115,13 +152,13 @@ footer div {
 
     header {
         grid-area: header;
-        flex-direction: row; /* Horizontal on desktop */
-        justify-content: space-between; /* Space logo and nav */
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     nav {
-      grid-area: header;
-      text-align: left;
+        grid-area: header;
+        text-align: left;
     }
 
     aside {
@@ -136,28 +173,27 @@ footer div {
         grid-area: footer;
     }
 
-    .logo { /* Added for logo when screen is desktop */
+    .logo {
         margin-bottom: 0;
     }
 
-    nav ul { /* added for nav when screen is desktop */
+    nav ul {
         text-align: right;
+    }
+    .descripcion {
+        width: 60%;
+    }
+    #revenueInput,
+    #amountInput {
+        width: auto;
     }
 }
 
-.controls button {
-    margin: 0.2rem;
-    padding: 0.3rem 0.5rem;
-    border: none;
+footer {
+    text-align: center;
+    word-break: break-all;
 }
 
-#revenueInput, #amountInput {
-    padding: 0.3rem;
-    margin-bottom: 0.3rem;
-}
-
-.descripcion {
-    width: 60%;
-    text-align: left;
-    margin: 5px auto;
+footer div {
+    padding: 0.5rem;
 }
