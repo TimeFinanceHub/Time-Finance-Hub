@@ -24,6 +24,14 @@ body {
     flex-direction: column; /* Stack elements vertically on mobile */
 }
 
+.disclaimer p {
+    margin-bottom: 15px; /* Adjust the value as needed */
+}
+
+.disclaimer h3 {
+    margin-bottom: 10px; /* Adjust the value as needed */
+}
+
 header, aside, main, footer {
     padding: 1rem;
 }
