@@ -4,6 +4,30 @@ const revenueList = document.getElementById('revenueList');
 
 let revenues = JSON.parse(localStorage.getItem('revenues')) || [];
 
+function addRevenue() {
+    const amount = parseFloat(revenueInput.value);
+    if (!isNaN(amount)) {
+        const date = new Date().toLocaleString();
+
+        if(amount >= 4.7) {
+            const userChoice = window.confirm("Amount is 4.7 or greater. Do you want to treat the rest as revenue?");
+
+            if(userChoice) {
+                revenues.push({ date, amount });
+            } else {
+                revenues.push({ date, amount: 0, savings: amount }); // Treat as no revenue and save the whole amount.
+            }
+
+        } else {
+            revenues.push({ date, amount });
+        }
+
+        localStorage.setItem('revenues', JSON.stringify(revenues));
+        revenueInput.value = '';
+        renderRevenues();
+    }
+}
+
 function renderRevenues() {
     revenueList.innerHTML = '';
     revenues.forEach((revenue, index) => {
@@ -12,14 +36,18 @@ function renderRevenues() {
         let revenueAmount = 0;
         let labels = [];
 
-        if (revenue.amount > 5) {
-            savings = 5;
-            revenueAmount = revenue.amount - 5;
-            labels.push('Savings: $' + savings);
-            labels.push('Revenue: $' + revenueAmount);
+        if (revenue.amount > 4.6) {
+            savings = 4.6;
+            revenueAmount = revenue.amount - 4.6;
+            labels.push('Savings: $' + savings.toFixed(2));
+            labels.push('Revenue: $' + revenueAmount.toFixed(2));
+        } else if (revenue.savings !== undefined){
+            savings = revenue.savings;
+            labels.push('Savings: $' + savings.toFixed(2));
+            labels.push('Not Revenue');
         } else {
             savings = revenue.amount;
-            labels.push('Savings: $' + savings);
+            labels.push('Savings: $' + savings.toFixed(2));
             labels.push('Not Revenue');
         }
 
@@ -36,17 +64,6 @@ function renderRevenues() {
 
         revenueList.appendChild(li);
     });
-}
-
-function addRevenue() {
-    const amount = parseFloat(revenueInput.value);
-    if (!isNaN(amount)) {
-        const date = new Date().toLocaleString();
-        revenues.push({ date, amount });
-        localStorage.setItem('revenues', JSON.stringify(revenues));
-        revenueInput.value = '';
-        renderRevenues();
-    }
 }
 
 addButton.addEventListener('click', addRevenue);
