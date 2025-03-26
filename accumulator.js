@@ -3,13 +3,14 @@ const incrementButton = document.getElementById('incrementButton');
 const amountInput = document.getElementById('amountInput');
 const addRecordButton = document.getElementById('addRecordButton');
 const recordList = document.getElementById('recordList');
+const incrementSelection = document.getElementById('incrementSelection'); // Get the increment selection div
 
-let counter = parseInt(localStorage.getItem('counter')) || 0; // Retrieve counter from localStorage
+let counter = parseInt(localStorage.getItem('counter')) || 0;
 let records = JSON.parse(localStorage.getItem('records')) || [];
 
 function updateCounterDisplay() {
     counterElement.textContent = counter;
-    localStorage.setItem('counter', counter); // Save counter to localStorage
+    localStorage.setItem('counter', counter);
 
     if (counter >= 1000) {
         amountInput.style.display = 'block';
@@ -23,7 +24,8 @@ function updateCounterDisplay() {
 }
 
 function incrementCounter() {
-    counter += 100;
+    const selectedIncrement = parseInt(document.querySelector('input[name="incrementValue"]:checked').value); // Get selected increment
+    counter += selectedIncrement;
     updateCounterDisplay();
 }
 
