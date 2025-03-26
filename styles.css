@@ -1,15 +1,14 @@
-/* Update the color variables for the desertic theme */
-:root {
-    --blanco: #f5f5f5; /* Light beige */
-    --oscuro: #333333; /* Dark charcoal */
-    --primario: #d2691e; /* Terracotta */
-    --secundario: #8fbc8f; /* Sage green */
-    --gris: #a9a9a9; /* Grayish brown */
-    --grisClaro: #e0e0e0; /* light grey */
-    --skyBlue: #87ceeb; /* Sky Blue */
+html {
+    font-size: 62.5%;
+    box-sizing: border-box; /* Hack para Box Model **/
+    scroll-snap-type: y mandatory;
 }
-
-/* Add styles for the record and revenue lists */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 16px; /* 1rem = 10px */
+}
 #recordList,
 #revenueList {
     list-style: none;
@@ -18,7 +17,6 @@
 
 #recordList li,
 #revenueList li {
-    background-color: var(--grisClaro);
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     border-radius: 5px;
@@ -29,23 +27,14 @@
 
 #recordList li button,
 #revenueList li button {
-    background-color: var(--primario);
-    color: var(--blanco);
     border: none;
     padding: 0.3rem 0.6rem;
     border-radius: 3px;
     cursor: pointer;
 }
 
-#recordList li button:hover,
-#revenueList li button:hover {
-    background-color: #b85f18; /* Darker terracotta on hover */
-}
-
 /* Style for the Cash App link in the footer */
 footer a {
-    background-color: var(--secundario); /* Sage green background */
-    color: var(--blanco);
     padding: 0.5rem 1rem;
     border-radius: 5px;
     text-decoration: none;
@@ -53,25 +42,11 @@ footer a {
     margin-bottom: 1rem; /* Add some space below the button */
 }
 
-footer a:hover {
-    background-color: #76a876; /* Darker sage green on hover */
-}
-
-/* other styles from previous code */
-
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--oscuro);
-}
-
 header, nav, aside, main, footer {
     padding: 1rem;
 }
 
 header {
-    background-color: var(--grisClaro);
     text-align: center;
     display: flex; /* Added for logo integration */
     flex-direction: column; /* Stack logo and nav on mobile */
@@ -102,15 +77,6 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: var(--secundario);
-}
-
-aside {
-    background-color: var(--grisClaro);
-}
-
-main {
-    background-color: var(--blanco);
 }
 
 #calendar table {
@@ -119,17 +85,12 @@ main {
 }
 
 #calendar th, #calendar td {
-    border: 1px solid var(--gris);
     padding: 0.5rem;
     text-align: center;
 }
 
-#calendar th {
-    background-color: var(--grisClaro);
-}
-
-.green { background-color: green; }
-.red { background-color: red; }
+.green { background-color: #98542d; }
+.red { background-color: #a37ce9; }
 
 footer {
     background-color: var(--grisClaro);
@@ -187,7 +148,6 @@ footer div {
 .controls button {
     margin: 0.2rem;
     padding: 0.3rem 0.5rem;
-    background-color: var(--primario);
     border: none;
 }
 
