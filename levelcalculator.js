@@ -16,6 +16,17 @@ const calculatePlayedLevelsButton = document.createElement('button');
 calculatePlayedLevelsButton.textContent = 'Calculate Played Levels';
 const playedLevelsDisplay = document.createElement('div');
 
+// Added elements for calculating coins per level
+const currentCoinsInput = document.createElement('input');
+currentCoinsInput.type = 'number';
+currentCoinsInput.placeholder = 'Current Coins';
+const coinsAfterLevelInput = document.createElement('input');
+coinsAfterLevelInput.type = 'number';
+coinsAfterLevelInput.placeholder = 'Coins After Level';
+const calculateCoinsPerLevelButton = document.createElement('button');
+calculateCoinsPerLevelButton.textContent = 'Calculate Coins/Level';
+const coinsPerLevelResultDisplay = document.createElement('div');
+
 let calculations = JSON.parse(localStorage.getItem('calculations')) || [];
 
 // Append new elements to the calculator section
@@ -24,6 +35,10 @@ calculatorDiv.appendChild(startingCoinsInput);
 calculatorDiv.appendChild(endingCoinsInput);
 calculatorDiv.appendChild(calculatePlayedLevelsButton);
 calculatorDiv.appendChild(playedLevelsDisplay);
+calculatorDiv.appendChild(currentCoinsInput);
+calculatorDiv.appendChild(coinsAfterLevelInput);
+calculatorDiv.appendChild(calculateCoinsPerLevelButton);
+calculatorDiv.appendChild(coinsPerLevelResultDisplay);
 
 function calculateLevels() {
     const gameName = gameNameInput.value;
@@ -55,6 +70,18 @@ function calculatePlayedLevels() {
     }
 }
 
+function calculateCoinsPerLevel() {
+    const currentCoins = parseFloat(currentCoinsInput.value);
+    const coinsAfterLevel = parseFloat(coinsAfterLevelInput.value);
+
+    if (!isNaN(currentCoins) && !isNaN(coinsAfterLevel)) {
+        const coinsPerLevel = coinsAfterLevel - currentCoins;
+        coinsPerLevelResultDisplay.textContent = `Coins per Level: ${coinsPerLevel}`;
+    } else {
+        coinsPerLevelResultDisplay.textContent = 'Invalid input';
+    }
+}
+
 function renderCalculations() {
     calculationList.innerHTML = '';
     calculations.forEach((calc, index) => {
@@ -80,5 +107,6 @@ function deleteCalculation(index) {
 
 calculateButton.addEventListener('click', calculateLevels);
 calculatePlayedLevelsButton.addEventListener('click', calculatePlayedLevels);
+calculateCoinsPerLevelButton.addEventListener('click', calculateCoinsPerLevel);
 
 renderCalculations();
