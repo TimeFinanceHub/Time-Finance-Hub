@@ -5,21 +5,25 @@ const coinPerLevelInput = document.getElementById('coinPerLevelInput');
 const calculateButton = document.getElementById('calculateButton');
 const calculationList = document.getElementById('calculationList');
 
-// Added elements
-const levelsInput = document.createElement('input');
-levelsInput.type = 'number';
-levelsInput.placeholder = 'Enter Levels';
-const calculateCoinsButton = document.createElement('button');
-calculateCoinsButton.textContent = 'Calculate Coins';
-const totalCoinsDisplay = document.createElement('div');
+// Added elements for new functionality
+const startingCoinsInput = document.createElement('input');
+startingCoinsInput.type = 'number';
+startingCoinsInput.placeholder = 'Starting Coins';
+const endingCoinsInput = document.createElement('input');
+endingCoinsInput.type = 'number';
+endingCoinsInput.placeholder = 'Ending Coins';
+const calculatePlayedLevelsButton = document.createElement('button');
+calculatePlayedLevelsButton.textContent = 'Calculate Played Levels';
+const playedLevelsDisplay = document.createElement('div');
 
 let calculations = JSON.parse(localStorage.getItem('calculations')) || [];
 
 // Append new elements to the calculator section
 const calculatorDiv = document.querySelector('#calculationList').parentElement;
-calculatorDiv.appendChild(levelsInput);
-calculatorDiv.appendChild(calculateCoinsButton);
-calculatorDiv.appendChild(totalCoinsDisplay);
+calculatorDiv.appendChild(startingCoinsInput);
+calculatorDiv.appendChild(endingCoinsInput);
+calculatorDiv.appendChild(calculatePlayedLevelsButton);
+calculatorDiv.appendChild(playedLevelsDisplay);
 
 function calculateLevels() {
     const gameName = gameNameInput.value;
@@ -37,15 +41,17 @@ function calculateLevels() {
     }
 }
 
-function calculateTotalCoins() {
+function calculatePlayedLevels() {
+    const startingCoins = parseFloat(startingCoinsInput.value);
+    const endingCoins = parseFloat(endingCoinsInput.value);
     const coinPerLevel = parseFloat(coinPerLevelInput.value);
-    const levels = parseFloat(levelsInput.value);
 
-    if (!isNaN(coinPerLevel) && !isNaN(levels)) {
-        const totalCoins = coinPerLevel * levels;
-        totalCoinsDisplay.textContent = `Total Coins: ${totalCoins}`;
+    if (!isNaN(startingCoins) && !isNaN(endingCoins) && !isNaN(coinPerLevel) && coinPerLevel !== 0) {
+        const coinsEarned = endingCoins - startingCoins;
+        const levelsPlayed = Math.floor(coinsEarned / coinPerLevel);
+        playedLevelsDisplay.textContent = `Levels Played: ${levelsPlayed}`;
     } else {
-        totalCoinsDisplay.textContent = 'Invalid input';
+        playedLevelsDisplay.textContent = 'Invalid input';
     }
 }
 
@@ -73,6 +79,6 @@ function deleteCalculation(index) {
 }
 
 calculateButton.addEventListener('click', calculateLevels);
-calculateCoinsButton.addEventListener('click', calculateTotalCoins);
+calculatePlayedLevelsButton.addEventListener('click', calculatePlayedLevels);
 
 renderCalculations();
