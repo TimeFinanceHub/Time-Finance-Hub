@@ -5,7 +5,21 @@ const coinPerLevelInput = document.getElementById('coinPerLevelInput');
 const calculateButton = document.getElementById('calculateButton');
 const calculationList = document.getElementById('calculationList');
 
+// Added elements
+const levelsInput = document.createElement('input');
+levelsInput.type = 'number';
+levelsInput.placeholder = 'Enter Levels';
+const calculateCoinsButton = document.createElement('button');
+calculateCoinsButton.textContent = 'Calculate Coins';
+const totalCoinsDisplay = document.createElement('div');
+
 let calculations = JSON.parse(localStorage.getItem('calculations')) || [];
+
+// Append new elements to the calculator section
+const calculatorDiv = document.querySelector('#calculationList').parentElement;
+calculatorDiv.appendChild(levelsInput);
+calculatorDiv.appendChild(calculateCoinsButton);
+calculatorDiv.appendChild(totalCoinsDisplay);
 
 function calculateLevels() {
     const gameName = gameNameInput.value;
@@ -20,6 +34,18 @@ function calculateLevels() {
         gameNameInput.value = '';
         coinGoalInput.value = '';
         coinPerLevelInput.value = '';
+    }
+}
+
+function calculateTotalCoins() {
+    const coinPerLevel = parseFloat(coinPerLevelInput.value);
+    const levels = parseFloat(levelsInput.value);
+
+    if (!isNaN(coinPerLevel) && !isNaN(levels)) {
+        const totalCoins = coinPerLevel * levels;
+        totalCoinsDisplay.textContent = `Total Coins: ${totalCoins}`;
+    } else {
+        totalCoinsDisplay.textContent = 'Invalid input';
     }
 }
 
@@ -47,5 +73,6 @@ function deleteCalculation(index) {
 }
 
 calculateButton.addEventListener('click', calculateLevels);
+calculateCoinsButton.addEventListener('click', calculateTotalCoins);
 
 renderCalculations();
