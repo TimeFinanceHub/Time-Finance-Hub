@@ -83,6 +83,23 @@
         <button id="addRecordButton" style="display: none;" class="btn">Add Record</button>
         <button id="forceSaveButton" class="btn">Save Record (Before 1000)</button>
         <ul id="recordList"></ul>
+        <br><hr><br>
+        <h2>Calculadora de Nivel (Level Calculator)</h2>
+        <div class="descripcion">
+            <h3>English:</h3>
+            <p>
+                Description: "Calculate levels needed to reach a coin goal."
+            </p>
+            <h3>Spanish:</h3>
+            <p>
+                Descripción: "Calcula los niveles necesarios para alcanzar una meta de monedas."
+            </p>
+        </div>
+        <input type="text" id="gameNameInput" placeholder="Game Name">
+        <input type="number" id="coinGoalInput" placeholder="Coin Goal">
+        <input type="number" id="coinPerLevelInput" placeholder="Coins per Level">
+        <button id="calculateButton" class="btn">Calculate</button>
+        <ul id="calculationList"></ul>
     </aside>
     <main>
         <h1>Calendario (Calendar)</h1>
@@ -116,5 +133,6 @@
     <script src="revenue.js"></script>
     <script src="accumulator.js"></script>
     <script src="calendar.js"></script>
+    <script src="levelcalculator.js"></script>
 </body>
 </html>
