@@ -1,6 +1,7 @@
 :root {
     --arena: #98542d;
     --purpura: #a37ce9;
+    --blanco: #FFFFFF;
 }
 
 * {
@@ -8,28 +9,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: var(--blanco);
+    font-family: "Exo 2", sans-serif;
 }
 
 html {
     font-size: 62.5%;
 }
 
-body {
-    font-size: 16px;
-}
-
 /* Mobile-First Layout */
 body {
     display: flex;
     flex-direction: column; /* Stack elements vertically on mobile */
+    font-size: 16px;
+    background: linear-gradient(to bottom left, var(--arena), var(--purpura));
 }
 
-.disclaimer p {
-    margin-bottom: 15px; /* Adjust the value as needed */
-}
-
-.disclaimer h3 {
-    margin-bottom: 10px; /* Adjust the value as needed */
+h1,h2,h3,h4,h5,h6,#calendar th {
+    font-family: "Orbitron", sans-serif !important;
 }
 
 header, aside, main, footer {
@@ -51,24 +48,11 @@ header {
     margin-right: 10px;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-}
-
-nav li {
-    display: inline;
-    margin: 0 1rem;
-}
-
-nav a {
-    text-decoration: none;
-}
-
 #calendar table {
     width: 100%;
     border-collapse: collapse;
+    border: 1px solid var(--arena);
+    margin: 1rem auto;
 }
 
 #calendar th,
@@ -77,8 +61,19 @@ nav a {
     text-align: center;
 }
 
+#calendar th {
+    background-color: var(--arena);
+    border: 1px solid var(--purpura);
+}
+
 #calendar td {
     transition: background-color 0.3s ease;
+    border: 1px solid var(--arena);
+}
+
+#calendar td:hover {
+    cursor: pointer;
+    background: linear-gradient(to bottom top, var(--arena), var(--purpura));
 }
 
 .arena {
@@ -89,13 +84,11 @@ nav a {
     background-color: var(--purpura);
 }
 
-#recordList,
 #revenueList {
     list-style: none;
     padding: 0;
 }
 
-#recordList li,
 #revenueList li {
     margin-bottom: 0.5rem;
     padding: 0.5rem;
@@ -105,13 +98,14 @@ nav a {
     align-items: center;
 }
 
-#recordList li button,
 #revenueList li button,
 .btn {
     border: none;
     padding: 0.3rem 0.6rem;
     border-radius: 3px;
     cursor: pointer;
+    background: linear-gradient(to bottom right, var(--arena), var(--purpura)); 
+    transition: all .5s;
 }
 
 footer a, .btn {
@@ -122,28 +116,23 @@ footer a, .btn {
     margin-bottom: 1rem;
 }
 
-.descripcion {
-    width: 90%; /* full width on mobile */
-    text-align: left;
-    margin: 5px auto;
+hr , .btn {
+    margin: 1rem auto;
+    margin-top: 1rem;
+}
+.btn {
+    border: 1px solid transparent;
 }
 
-#revenueInput,
-#amountInput {
+.btn:hover {
+    border: 1px solid var(--arena);
+}
+
+#revenueInput {
     width: 90%;
     padding: 0.3rem;
     margin: 5px auto 10px;
     display: block;
-}
-
-#incrementSelection {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-#incrementSelection label {
-    margin: 5px;
 }
 
 /* Desktop Layout */
@@ -164,11 +153,6 @@ footer a, .btn {
         justify-content: space-between;
     }
 
-    nav {
-        grid-area: header;
-        text-align: left;
-    }
-
     aside {
         grid-area: aside;
     }
@@ -185,14 +169,7 @@ footer a, .btn {
         margin-bottom: 0;
     }
 
-    nav ul {
-        text-align: right;
-    }
-    .descripcion {
-        width: 60%;
-    }
-    #revenueInput,
-    #amountInput {
+    #revenueInput{
         width: auto;
     }
 }
